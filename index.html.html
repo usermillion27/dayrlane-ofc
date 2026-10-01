@@ -257,7 +257,7 @@ function firstFree(){for(const d of nextDays())for(const x of slotsList())for(le
 function toSum(){B.n=$("cn").value.trim();B.p=$("cp").value.trim();B.e=$("ce").value.trim();B.b=$("cb").value;B.o=$("co").value;
 if(!B.n||!B.p)return $("er").textContent="Preencha nome e telefone.";if(B.e&&!/\S+@\S+\.\S+/.test(B.e))return $("er").textContent="Este e-mail parece incompleto. Corrija ou deixe em branco.";
 if(!$("ck").checked)return $("er").textContent="É necessário aceitar os termos.";B.step=5;renderB()}
-const SB_URL="",SB_KEY="";/* Supabase: Project URL e chave pública (anon/publishable). Vazio = modo demonstração (dados só neste navegador) */
+const SB_URL="https://ssxrlszkbkykvtsrtujx.supabase.co",SB_KEY="sb_publishable_0x-Hplbx4i8KuG0xTEEHxQ_wbe5A_wR";/* Supabase: Project URL e chave pública (anon/publishable). Vazio = modo demonstração (dados só neste navegador) */
 async function sbReq(p,o={},auth){const r=await fetch(SB_URL+p,{...o,headers:{apikey:SB_KEY,Authorization:"Bearer "+(auth&&AD.tok?AD.tok:SB_KEY),"Content-Type":"application/json",...(o.headers||{})}});if(r.status==401){AD.tok=null;throw new Error("Sessão expirada. Entre novamente.")}if(!r.ok)throw new Error(await r.text());return r.status==204?null:r.json()}
 const sbGet=p=>sbReq(p,{},1),sbPatch=(id,s)=>sbReq("/rest/v1/agendamentos?id=eq."+id,{method:"PATCH",body:JSON.stringify({status:s}),headers:{Prefer:"return=minimal"}},1);
 async function sbIns(row){try{const r=await fetch(SB_URL+"/rest/v1/agendamentos",{method:"POST",headers:{apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify(row)});return r.ok?"ok":r.status==409?"conflict":"fail"}catch(e){return"fail"}}
